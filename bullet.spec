@@ -3,17 +3,17 @@
 %bcond_with	tests		# build with tests
 %bcond_without	tests		# build without tests
 #
-%define		patch	-beta1
+%define		patch	%{nil}
 
 Summary:	Bullet
 Summary(pl.UTF-8):	Bullet
 Name:		bullet
 Version:	2.74
-Release:	0.1
+Release:	0.2
 License:	GPL
 Group:		Applications
 Source0:	http://bullet.googlecode.com/files/%{name}-%{version}%{patch}.tgz
-# Source0-md5:	7c3daad95d1a07be0fea35aaa9c67db7
+# Source0-md5:	a444e0a5cd528c91356490ed7f25e262
 #Source1:	-
 # Source1-md5:	-
 #Patch0:		%{name}-DESTDIR.patch
