@@ -1,27 +1,16 @@
 #
-# Conditional build:
-%bcond_with	tests		# build with tests
-%bcond_without	tests		# build without tests
-#
 %define		patch	%{nil}
 
 Summary:	Bullet
 Summary(pl.UTF-8):	Bullet
 Name:		bullet
 Version:	2.74
-Release:	0.2
+Release:	0.99
 License:	GPL
 Group:		Applications
 Source0:	http://bullet.googlecode.com/files/%{name}-%{version}%{patch}.tgz
 # Source0-md5:	a444e0a5cd528c91356490ed7f25e262
-#Source1:	-
-# Source1-md5:	-
-#Patch0:		%{name}-DESTDIR.patch
 URL:		-
-%if %{with initscript}
-BuildRequires:	rpmbuild(macros) >= 1.228
-Requires(post,preun):	/sbin/chkconfig
-%endif
 #BuildRequires:	-
 #BuildRequires:	autoconf
 #BuildRequires:	automake
@@ -44,32 +33,11 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description -l pl.UTF-8
 
-%package subpackage
-Summary:	-
-Summary(pl.UTF-8):	-
-Group:		-
-
-%description subpackage
-
-%description subpackage -l pl.UTF-8
-
-%package libs
-Summary:	-
-Summary(pl.UTF-8):	-
-Group:		Libraries
-
-%description libs
-
-%description libs -l pl.UTF-8
-
 %package devel
 Summary:	Header files for ... library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki ...
 Group:		Development/Libraries
-# if base package contains shared library for which these headers are
-#Requires:	%{name} = %{version}-%{release}
-# if -libs package contains shared library for which these headers are
-#Requires:	%{name}-libs = %{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
 
 %description devel
 Header files for ... library.
@@ -97,15 +65,11 @@ Statyczna biblioteka ....
 %configure
 %{__make}
 
-#%{__make} \
-#	CFLAGS="%{rpmcflags}" \
-#	LDFLAGS="%{rpmldflags}"
-
 %install
 rm -rf $RPM_BUILD_ROOT
-# create directories if necessary
-#install -d $RPM_BUILD_ROOT
-#install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+
+cat install-sh | tr -d '\r' > install-sh2
+mv install-sh2 install-sh
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
@@ -113,60 +77,23 @@ rm -rf $RPM_BUILD_ROOT
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%pre
-%groupadd -g xxx %{name}
-%useradd -u xxx -d /var/lib/%{name} -g %{name} -c "XXX User" %{name}
-
-%post
-
-%preun
-
-%postun
-if [ "$1" = "0" ]; then
-	%userremove %{name}
-	%groupremove %{name}
-fi
-
 %if %{with ldconfig}
 %post	-p /sbin/ldconfig
 %postun	-p /sbin/ldconfig
 %endif
 
-%if %{with initscript}
-%post init
-/sbin/chkconfig --add %{name}
-%service %{name} restart
-
-%preun init
-if [ "$1" = "0" ]; then
-	%service -q %{name} stop
-	/sbin/chkconfig --del %{name}
-fi
-%endif
-
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS CREDITS ChangeLog NEWS README THANKS TODO
+%doc AUTHORS ChangeLog NEWS README
+%attr (755,root,root) %{_libdir}/lib%{name}*.so.*.*
 
-%if 0
-# if _sysconfdir != /etc:
-#%%dir %{_sysconfdir}
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/*
-%attr(755,root,root) %{_bindir}/*
-%{_datadir}/%{name}
-%endif
+%files devel
+%defattr(644,root,root)
+%attr(755,root,root) %{_libdir}/lib%{name}*.so
+%attr(755,root,root) %{_libdir}/lib%{name}*.so.*
+%attr(644,root,root) %{_libdir}/lib%{name}*.la
+%{_includedir}/%{name}/
+%{_pkgconfigdir}/%{name}.pc
 
-# initscript and its config
-%if %{with initscript}
-%attr(754,root,root) /etc/rc.d/init.d/%{name}
-%config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/%{name}
-%endif
-
-#%{_examplesdir}/%{name}-%{version}
-
-%if %{with subpackage}
-%files subpackage
-%defattr(644,root,root,755)
-#%doc extras/*.gz
-#%{_datadir}/%{name}-ext
-%endif
+%files static
+%{_libdir}/lib%{name}*.a
