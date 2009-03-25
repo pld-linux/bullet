@@ -1,35 +1,20 @@
 #
 %define		patch	%{nil}
 
-Summary:	Bullet
+Summary:	Bullet - Collision Detection and Rigid Body Dynamics Library.
 Summary(pl.UTF-8):	Bullet
 Name:		bullet
 Version:	2.74
 Release:	0.99
-License:	GPL
+License:	Zlib
 Group:		Applications
 Source0:	http://bullet.googlecode.com/files/%{name}-%{version}%{patch}.tgz
 # Source0-md5:	a444e0a5cd528c91356490ed7f25e262
-URL:		-
-#BuildRequires:	-
-#BuildRequires:	autoconf
-#BuildRequires:	automake
-#BuildRequires:	intltool
-#BuildRequires:	libtool
-#Requires(postun):	-
-#Requires(pre,post):	-
-#Requires(preun):	-
-#Requires:	-
-#Provides:	-
-#Provides:	group(foo)
-#Provides:	user(foo)
-#Obsoletes:	-
-#Conflicts:	-
-#BuildArch:	noarch
-#ExclusiveArch:	%{ix86}
+URL:		http://www.bulletphysics.com/Bullet/wordpress/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
+Bullet is a Collision Detection and Rigid Body Dynamics Library.
 
 %description -l pl.UTF-8
 
