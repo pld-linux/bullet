@@ -73,7 +73,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr (755,root,root) %{_libdir}/lib%{name}*.so.*.*
 
 %files devel
-%defattr(644,root,root)
+%defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/lib%{name}*.so
 %attr(755,root,root) %{_libdir}/lib%{name}*.so.*
 %attr(644,root,root) %{_libdir}/lib%{name}*.la
