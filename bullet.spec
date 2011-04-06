@@ -7,6 +7,7 @@ License:	Zlib
 Group:		Applications
 Source0:	http://bullet.googlecode.com/files/%{name}-%{version}.tgz
 # Source0-md5:	2f5074a1a29b618c672f1da4748e374b
+Patch0:		%{name}-lib_suffix.patch
 URL:		http://www.bulletphysics.com/Bullet/wordpress/
 BuildRequires:	OpenGL-glut-devel
 BuildRequires:	cmake
@@ -36,6 +37,7 @@ Pliki nagłówkowe biblioteki bullet.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 mkdir build
