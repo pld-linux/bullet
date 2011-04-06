@@ -8,7 +8,7 @@ Group:		Applications
 Source0:	http://bullet.googlecode.com/files/%{name}-%{version}.tgz
 # Source0-md5:	2f5074a1a29b618c672f1da4748e374b
 URL:		http://www.bulletphysics.com/Bullet/wordpress/
-BuildRequires:	OpenGL-glut
+BuildRequires:	OpenGL-glut-devel
 BuildRequires:	cmake
 BuildRequires:	rpmbuild(macros) >= 1.600
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
