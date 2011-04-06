@@ -2,10 +2,10 @@ Summary:	Bullet - vollision detection and rigid body dynamics library
 Summary(pl.UTF-8):	Bullet - biblioteka wykrywania kolizji oraz dynamiki ciała sztywnego
 Name:		bullet
 Version:	2.77
-Release:	0.99
+Release:	1
 License:	Zlib
 Group:		Applications
-Source0:	http://bullet.googlecode.com/files/%{name}-%{version}%{patch}.tgz
+Source0:	http://bullet.googlecode.com/files/%{name}-%{version}.tgz
 # Source0-md5:	2f5074a1a29b618c672f1da4748e374b
 URL:		http://www.bulletphysics.com/Bullet/wordpress/
 BuildRequires:	OpenGL-glut
