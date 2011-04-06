@@ -1,84 +1,85 @@
-#
-%define		patch	%{nil}
-
-Summary:	Bullet - Collision Detection and Rigid Body Dynamics Library.
-Summary(pl.UTF-8):	Bullet
+Summary:	Bullet - vollision detection and rigid body dynamics library
+Summary(pl.UTF-8):	Bullet - biblioteka wykrywania kolizji oraz dynamiki ciała sztywnego
 Name:		bullet
-Version:	2.74
+Version:	2.77
 Release:	0.99
 License:	Zlib
 Group:		Applications
 Source0:	http://bullet.googlecode.com/files/%{name}-%{version}%{patch}.tgz
-# Source0-md5:	a444e0a5cd528c91356490ed7f25e262
+# Source0-md5:	2f5074a1a29b618c672f1da4748e374b
 URL:		http://www.bulletphysics.com/Bullet/wordpress/
+BuildRequires:	OpenGL-glut
+BuildRequires:	cmake
+BuildRequires:	rpmbuild(macros) >= 1.600
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
+# better fix by proper linking
+%define		skip_post_check_so	libBulletMultiThreaded.so.*
+
 %description
-Bullet is a Collision Detection and Rigid Body Dynamics Library.
+Bullet is a collision detection and rigid nody dynamics library.
 
 %description -l pl.UTF-8
+Bullet to biblioteka wykrywania kolizji oraz dynamiki ciała sztywnego
 
 %package devel
-Summary:	Header files for ... library
-Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki ...
+Summary:	Header files for bullet library
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki bullet
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description devel
-Header files for ... library.
+Header files for bullet library.
 
 %description devel -l pl.UTF-8
-Pliki nagłówkowe biblioteki ....
-
-%package static
-Summary:	Static ... library
-Summary(pl.UTF-8):	Statyczna biblioteka ...
-Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}-%{release}
-
-%description static
-Static ... library.
-
-%description static -l pl.UTF-8
-Statyczna biblioteka ....
+Pliki nagłówkowe biblioteki bullet.
 
 %prep
 %setup -q
 
 %build
-./autogen.sh
-%configure
+mkdir build
+cd build
+%cmake \
+	-DBUILD_DEMOS=OFF \
+	-DBUILD_EXTRAS=ON \
+	-DINCLUDE_INSTALL_DIR=%{_includedir}/%{name} \
+	..
+
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-cat install-sh | tr -d '\r' > install-sh2
-mv install-sh2 install-sh
-
-%{__make} install \
+%{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%if %{with ldconfig}
 %post	-p /sbin/ldconfig
 %postun	-p /sbin/ldconfig
-%endif
 
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README
-%attr (755,root,root) %{_libdir}/lib%{name}*.so.*.*
+%attr(755,root,root) %{_libdir}/libBulletCollision.so.*.*
+%attr(755,root,root) %{_libdir}/libBulletDynamics.so.*.*
+%attr(755,root,root) %{_libdir}/libBulletMultiThreaded.so.*.*
+%attr(755,root,root) %{_libdir}/libBulletSoftBody.so.*.*
+%attr(755,root,root) %{_libdir}/libBulletSoftBodySolvers_CPU.so.*.*
+%attr(755,root,root) %{_libdir}/libLinearMath.so.*.*
+%attr(755,root,root) %{_libdir}/libMiniCL.so.*.*
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/lib%{name}*.so
-%attr(755,root,root) %{_libdir}/lib%{name}*.so.*
-%attr(644,root,root) %{_libdir}/lib%{name}*.la
-%{_includedir}/%{name}/
+%doc Bullet_User_Manual.pdf
+%attr(755,root,root) %{_libdir}/libBulletCollision.so
+%attr(755,root,root) %{_libdir}/libBulletDynamics.so
+%attr(755,root,root) %{_libdir}/libBulletMultiThreaded.so
+%attr(755,root,root) %{_libdir}/libBulletSoftBody.so
+%attr(755,root,root) %{_libdir}/libBulletSoftBodySolvers_CPU.so
+%attr(755,root,root) %{_libdir}/libLinearMath.so
+%attr(755,root,root) %{_libdir}/libMiniCL.so
+%{_includedir}/%{name}
 %{_pkgconfigdir}/%{name}.pc
-
-%files static
-%{_libdir}/lib%{name}*.a
