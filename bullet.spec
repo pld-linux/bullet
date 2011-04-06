@@ -37,6 +37,7 @@ Pliki nagłówkowe biblioteki bullet.
 
 %prep
 %setup -q
+%undos src/MiniCL/CMakeLists.txt
 %patch0 -p1
 
 %build
