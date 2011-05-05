@@ -1,0 +1,22 @@
+--- bullet-2.78/src/BulletMultiThreaded/GpuSoftBodySolvers/OpenCL/NVidia/CMakeLists.txt~	2011-02-27 02:07:08.000000000 +0100
++++ bullet-2.78/src/BulletMultiThreaded/GpuSoftBodySolvers/OpenCL/NVidia/CMakeLists.txt	2011-05-05 10:19:40.076666674 +0200
+@@ -55,7 +55,7 @@
+ SET_TARGET_PROPERTIES(BulletSoftBodySolvers_OpenCL_NVidia PROPERTIES VERSION ${BULLET_VERSION})
+ SET_TARGET_PROPERTIES(BulletSoftBodySolvers_OpenCL_NVidia PROPERTIES SOVERSION ${BULLET_VERSION})
+ IF (BUILD_SHARED_LIBS)
+-	TARGET_LINK_LIBRARIES(BulletSoftBodySolvers_OpenCL_NVidia BulletSoftBody BulletDynamics)
++	TARGET_LINK_LIBRARIES(BulletSoftBodySolvers_OpenCL_NVidia BulletSoftBody BulletDynamics OpenCL)
+ ENDIF (BUILD_SHARED_LIBS)
+ 
+ 
+--- bullet-2.78/src/BulletMultiThreaded/GpuSoftBodySolvers/OpenCL/MiniCL/CMakeLists.txt~	2010-09-07 16:40:18.000000000 +0200
++++ bullet-2.78/src/BulletMultiThreaded/GpuSoftBodySolvers/OpenCL/MiniCL/CMakeLists.txt	2011-05-05 10:30:44.966666675 +0200
+@@ -52,7 +52,7 @@
+ SET_TARGET_PROPERTIES(BulletSoftBodySolvers_OpenCL_Mini PROPERTIES VERSION ${BULLET_VERSION})
+ SET_TARGET_PROPERTIES(BulletSoftBodySolvers_OpenCL_Mini PROPERTIES SOVERSION ${BULLET_VERSION})
+ IF (BUILD_SHARED_LIBS)
+-	TARGET_LINK_LIBRARIES(BulletSoftBodySolvers_OpenCL_Mini MiniCL BulletMultiThreaded BulletSoftBody)
++	TARGET_LINK_LIBRARIES(BulletSoftBodySolvers_OpenCL_Mini MiniCL BulletMultiThreaded BulletSoftBody OpenCL)
+ ENDIF (BUILD_SHARED_LIBS)
+ 
+ 
