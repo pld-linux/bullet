@@ -2,7 +2,7 @@ Summary:	Bullet - vollision detection and rigid body dynamics library
 Summary(pl.UTF-8):	Bullet - biblioteka wykrywania kolizji oraz dynamiki ciała sztywnego
 Name:		bullet
 Version:	2.78
-Release:	1
+Release:	0.1
 License:	Zlib
 Group:		Applications
 Source0:	http://bullet.googlecode.com/files/%{name}-%{version}.zip
@@ -35,9 +35,9 @@ Pliki nagłówkowe biblioteki bullet.
 
 %prep
 %setup -q
-%undos src/BulletMultiThreaded/GpuSoftBodySolvers/OpenCL/NVidia/CMakeLists.txt
-%undos src/BulletMultiThreaded/GpuSoftBodySolvers/OpenCL/MiniCL/CMakeLists.txt
-%patch0 -p1
+#%%undos src/BulletMultiThreaded/GpuSoftBodySolvers/OpenCL/NVidia/CMakeLists.txt
+#%%undos src/BulletMultiThreaded/GpuSoftBodySolvers/OpenCL/MiniCL/CMakeLists.txt
+#%%patch0 -p1
 
 %build
 mkdir build
