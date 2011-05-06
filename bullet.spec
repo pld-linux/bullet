@@ -1,3 +1,6 @@
+#
+# TODO: fix linking
+#
 Summary:	Bullet - vollision detection and rigid body dynamics library
 Summary(pl.UTF-8):	Bullet - biblioteka wykrywania kolizji oraz dynamiki ciała sztywnego
 Name:		bullet
