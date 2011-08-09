@@ -38,9 +38,9 @@ Pliki nagłówkowe biblioteki bullet.
 
 %prep
 %setup -q
-#%%undos src/BulletMultiThreaded/GpuSoftBodySolvers/OpenCL/NVidia/CMakeLists.txt
-#%%undos src/BulletMultiThreaded/GpuSoftBodySolvers/OpenCL/MiniCL/CMakeLists.txt
-#%%patch0 -p1
+%undos src/BulletMultiThreaded/GpuSoftBodySolvers/OpenCL/NVidia/CMakeLists.txt
+%undos src/BulletMultiThreaded/GpuSoftBodySolvers/OpenCL/MiniCL/CMakeLists.txt
+%patch0 -p1
 
 %build
 mkdir build
@@ -73,6 +73,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libBulletMultiThreaded.so.*.*
 %attr(755,root,root) %{_libdir}/libBulletSoftBody.so.*.*
 %attr(755,root,root) %{_libdir}/libBulletSoftBodySolvers_CPU.so.*.*
+%attr(755,root,root) %{_libdir}/libBulletSoftBodySolvers_OpenCL_Mini.so.*.*
 %attr(755,root,root) %{_libdir}/libLinearMath.so.*.*
 %attr(755,root,root) %{_libdir}/libMiniCL.so.*.*
 
@@ -84,6 +85,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libBulletMultiThreaded.so
 %attr(755,root,root) %{_libdir}/libBulletSoftBody.so
 %attr(755,root,root) %{_libdir}/libBulletSoftBodySolvers_CPU.so
+%attr(755,root,root) %{_libdir}/libBulletSoftBodySolvers_OpenCL_Mini.so
 %attr(755,root,root) %{_libdir}/libLinearMath.so
 %attr(755,root,root) %{_libdir}/libMiniCL.so
 %{_includedir}/%{name}
