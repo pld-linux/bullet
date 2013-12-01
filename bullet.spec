@@ -4,7 +4,7 @@
 %bcond_with	opencl_intel	# Intel OpenCL (64-bit)
 %bcond_with	opencl_nvidia	# NVidia OpenCL
 #
-Summary:	Bullet - vollision detection and rigid body dynamics library
+Summary:	Bullet - collision detection and rigid body dynamics library
 Summary(pl.UTF-8):	Bullet - biblioteka wykrywania kolizji oraz dynamiki ciała sztywnego
 Name:		bullet
 Version:	2.82
