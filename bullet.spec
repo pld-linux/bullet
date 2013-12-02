@@ -54,6 +54,8 @@ install -d pkgbuild
 cd pkgbuild
 %cmake .. \
 	%{!?with_opencl_amd:-DAMD_OPENCL_BASE_DIR:BOOL=OFF} \
+	%{!?with_opencl_intel:-DINTEL_OPENCL_BASE_DIR:BOOL=OFF} \
+	%{!?with_opencl_nvidia:-DNVIDIA_OPENCL_BASE_DIR:BOOL=OFF} \
 	-DBUILD_DEMOS=OFF \
 	-DBUILD_EXTRAS=ON \
 	-DBUILD_MULTITHREADING=ON \
