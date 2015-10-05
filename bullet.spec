@@ -20,7 +20,7 @@ BuildRequires:	OpenCL-devel
 BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	OpenGL-glut-devel
 BuildRequires:	cmake >= 2.4.3
-BuildRequires:	libstd++-devel
+BuildRequires:	libstdc++-devel
 BuildRequires:	rpmbuild(macros) >= 1.600
 BuildRequires:	unzip
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
