@@ -33,7 +33,7 @@ Summary(pl.UTF-8):	Pliki nagłówkowe bibliotek bullet
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	OpenCL-devel
-Requires:	OpenGL-GL-devel >= 3.0
+Requires:	OpenGL-devel >= 3.0
 Requires:	OpenGL-GLU-devel
 Requires:	OpenGL-glut-devel
 
