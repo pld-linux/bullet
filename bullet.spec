@@ -1,25 +1,21 @@
-#
-# Conditional build:
-%bcond_with	opencl_amd	# AMD OpenCL
-%bcond_with	opencl_intel	# Intel OpenCL (64-bit)
-%bcond_with	opencl_nvidia	# NVidia OpenCL
-#
 Summary:	Bullet - collision detection and rigid body dynamics library
 Summary(pl.UTF-8):	Bullet - biblioteka wykrywania kolizji oraz dynamiki ciała sztywnego
 Name:		bullet
-Version:	2.82
-Release:	2
+Version:	2.83.6
+Release:	1
 License:	Zlib (BSD-like)
 Group:		Libraries
-#Source0Download: https://code.google.com/p/bullet/downloads/list
-Source0:	http://bullet.googlecode.com/files/%{name}-%{version}-r2704.tgz
-# Source0-md5:	70b3c8d202dee91a0854b4cbc88173e8
+#Source0Download: https://github.com/bulletphysics/bullet3/releases
+Source0:	https://github.com/bulletphysics/bullet3/archive/%{version}/%{name}-%{version}.tar.gz
+# Source0-md5:	44cb2464336a2082b2c144194c2a2668
 Patch0:		%{name}-link.patch
+Patch1:		%{name}-format.patch
 URL:		http://bulletphysics.org/wordpress/
 BuildRequires:	OpenCL-devel
+BuildRequires:	OpenGL-devel >= 3.0
 BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	OpenGL-glut-devel
-BuildRequires:	cmake >= 2.4.3
+BuildRequires:	cmake >= 2.6
 BuildRequires:	libstdc++-devel
 BuildRequires:	rpmbuild(macros) >= 1.600
 BuildRequires:	unzip
@@ -37,6 +33,7 @@ Summary(pl.UTF-8):	Pliki nagłówkowe bibliotek bullet
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	OpenCL-devel
+Requires:	OpenGL-GL-devel >= 3.0
 Requires:	OpenGL-GLU-devel
 Requires:	OpenGL-glut-devel
 
@@ -46,21 +43,31 @@ Header files for bullet libraries.
 %description devel -l pl.UTF-8
 Pliki nagłówkowe bibliotek bullet.
 
+%package doc
+Summary:	Bullet libraries documentation
+Summary(pl.UTF-8):	Dokumentacja do bibliotek bullet
+Group:		Documentation
+
+%description doc
+Bullet libraries documentation.
+
+%description doc -l pl.UTF-8
+Dokumentacja do bibliotek bullet.
+
 %prep
-%setup -q -n %{name}-%{version}-r2704
+%setup -q -n bullet3-%{version}
 %patch0 -p1
+%patch1 -p1
 
 %build
 install -d pkgbuild
 cd pkgbuild
 %cmake .. \
-	%{!?with_opencl_amd:-DAMD_OPENCL_BASE_DIR:BOOL=OFF} \
-	%{!?with_opencl_intel:-DINTEL_OPENCL_ICD_CFG:BOOL=OFF} \
-	%{!?with_opencl_nvidia:-DNVIDIA_OPENCL_ICD_CFG:BOOL=OFF} \
-	-DBUILD_DEMOS=OFF \
+	-DBUILD_CPU_DEMOS=OFF \
 	-DBUILD_EXTRAS=ON \
-	-DBUILD_MULTITHREADING=ON \
+	-DBUILD_OPENGL3_DEMOS=OFF \
 	-DINCLUDE_INSTALL_DIR=%{_includedir}/%{name} \
+	-DINSTALL_EXTRA_LIBS=ON
 
 %{__make}
 
@@ -78,31 +85,46 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS COPYING ChangeLog NEWS README
+%doc AUTHORS.txt LICENSE.txt README.md
+%attr(755,root,root) %{_libdir}/libBullet2FileLoader.so.*.*
+%attr(755,root,root) %{_libdir}/libBullet3Collision.so.*.*
+%attr(755,root,root) %{_libdir}/libBullet3Common.so.*.*
+%attr(755,root,root) %{_libdir}/libBullet3Dynamics.so.*.*
+%attr(755,root,root) %{_libdir}/libBullet3Geometry.so.*.*
+%attr(755,root,root) %{_libdir}/libBullet3OpenCL_clew.so.*.*
 %attr(755,root,root) %{_libdir}/libBulletCollision.so.*.*
 %attr(755,root,root) %{_libdir}/libBulletDynamics.so.*.*
-%attr(755,root,root) %{_libdir}/libBulletMultiThreaded.so.*.*
+%attr(755,root,root) %{_libdir}/libBulletFileLoader.so.*.*
 %attr(755,root,root) %{_libdir}/libBulletSoftBody.so.*.*
-%attr(755,root,root) %{_libdir}/libBulletSoftBodySolvers_OpenCL_Mini.so.*.*
-%{?with_opencl_amd:%attr(755,root,root) %{_libdir}/libBulletSoftBodySolvers_OpenCL_AMD.so.*.*}
-%{?with_opencl_intel:%attr(755,root,root) %{_libdir}/libBulletSoftBodySolvers_OpenCL_Intel.so.*.*}
-%{?with_opencl_nvidia:%attr(755,root,root) %{_libdir}/libBulletSoftBodySolvers_OpenCL_NVidia.so.*.*}
+%attr(755,root,root) %{_libdir}/libBulletWorldImporter.so.*.*
+%attr(755,root,root) %{_libdir}/libBulletXmlWorldImporter.so.*.*
+%attr(755,root,root) %{_libdir}/libConvexDecomposition.so.*.*
+%attr(755,root,root) %{_libdir}/libGIMPACTUtils.so.*.*
+%attr(755,root,root) %{_libdir}/libHACD.so.*.*
 %attr(755,root,root) %{_libdir}/libLinearMath.so.*.*
-%attr(755,root,root) %{_libdir}/libMiniCL.so.*.*
 
 %files devel
 %defattr(644,root,root,755)
-%doc Bullet_User_Manual.pdf
+%attr(755,root,root) %{_libdir}/libBullet2FileLoader.so
+%attr(755,root,root) %{_libdir}/libBullet3Collision.so
+%attr(755,root,root) %{_libdir}/libBullet3Common.so
+%attr(755,root,root) %{_libdir}/libBullet3Dynamics.so
+%attr(755,root,root) %{_libdir}/libBullet3Geometry.so
+%attr(755,root,root) %{_libdir}/libBullet3OpenCL_clew.so
 %attr(755,root,root) %{_libdir}/libBulletCollision.so
 %attr(755,root,root) %{_libdir}/libBulletDynamics.so
-%attr(755,root,root) %{_libdir}/libBulletMultiThreaded.so
+%attr(755,root,root) %{_libdir}/libBulletFileLoader.so
 %attr(755,root,root) %{_libdir}/libBulletSoftBody.so
-%attr(755,root,root) %{_libdir}/libBulletSoftBodySolvers_OpenCL_Mini.so
-%{?with_opencl_amd:%attr(755,root,root) %{_libdir}/libBulletSoftBodySolvers_OpenCL_AMD.so}
-%{?with_opencl_intel:%attr(755,root,root) %{_libdir}/libBulletSoftBodySolvers_OpenCL_Intel.so}
-%{?with_opencl_nvidia:%attr(755,root,root) %{_libdir}/libBulletSoftBodySolvers_OpenCL_NVidia.so}
+%attr(755,root,root) %{_libdir}/libBulletWorldImporter.so
+%attr(755,root,root) %{_libdir}/libBulletXmlWorldImporter.so
+%attr(755,root,root) %{_libdir}/libConvexDecomposition.so
+%attr(755,root,root) %{_libdir}/libGIMPACTUtils.so
+%attr(755,root,root) %{_libdir}/libHACD.so
 %attr(755,root,root) %{_libdir}/libLinearMath.so
-%attr(755,root,root) %{_libdir}/libMiniCL.so
 %{_includedir}/bullet
 %{_libdir}/cmake/bullet
 %{_pkgconfigdir}/bullet.pc
+
+%files doc
+%defattr(644,root,root,755)
+%doc docs/{BulletQuickstart,Bullet_User_Manual,GPU_rigidbody_using_OpenCL}.pdf
