@@ -66,7 +66,6 @@ cd pkgbuild
 	-DBUILD_CPU_DEMOS=OFF \
 	-DBUILD_EXTRAS=ON \
 	-DBUILD_OPENGL3_DEMOS=OFF \
-	-DINCLUDE_INSTALL_DIR=%{_includedir}/%{name} \
 	-DINSTALL_EXTRA_LIBS=ON
 
 %{__make}
