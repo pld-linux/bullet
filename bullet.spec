@@ -2,7 +2,7 @@ Summary:	Bullet - collision detection and rigid body dynamics library
 Summary(pl.UTF-8):	Bullet - biblioteka wykrywania kolizji oraz dynamiki ciała sztywnego
 Name:		bullet
 Version:	2.83.6
-Release:	1
+Release:	2
 License:	Zlib (BSD-like)
 Group:		Libraries
 #Source0Download: https://github.com/bulletphysics/bullet3/releases
